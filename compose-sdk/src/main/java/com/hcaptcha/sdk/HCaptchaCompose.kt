@@ -3,6 +3,7 @@ package com.hcaptcha.sdk
 import android.os.Handler
 import android.os.Looper
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.imePadding
 import androidx.compose.foundation.layout.size
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.mutableStateOf
@@ -15,7 +16,11 @@ import androidx.compose.ui.window.Dialog
 import androidx.compose.ui.window.DialogProperties
 
 @Composable
-public fun HCaptchaCompose(config: HCaptchaConfig, onResult: (HCaptchaResponse) -> Unit) {
+public fun HCaptchaCompose(
+    config: HCaptchaConfig,
+    onDismissRequest: () -> Unit = {},
+    onResult: (HCaptchaResponse) -> Unit
+) {
     HCaptchaLog.sDiagnosticsLogEnabled = config.diagnosticLog
 
     val context = LocalContext.current
@@ -41,11 +46,11 @@ public fun HCaptchaCompose(config: HCaptchaConfig, onResult: (HCaptchaResponse) 
         )
     } else {
         Dialog(
-            onDismissRequest = {},
+            onDismissRequest = onDismissRequest,
             properties = DialogProperties(usePlatformDefaultWidth = false)
         ) {
             AndroidView(
-                modifier = Modifier.fillMaxSize(),
+                modifier = Modifier.fillMaxSize().imePadding(),
                 factory = { preloadedWebView }
             )
         }
