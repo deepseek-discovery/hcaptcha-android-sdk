@@ -50,7 +50,7 @@ public fun HCaptchaCompose(
             properties = DialogProperties(usePlatformDefaultWidth = false)
         ) {
             AndroidView(
-                modifier = Modifier.fillMaxSize().imePadding(),
+                modifier = Modifier.imePadding().fillMaxSize(),
                 factory = { preloadedWebView }
             )
         }
